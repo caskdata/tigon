@@ -124,6 +124,7 @@
     <module>tigon-flow</module>
     <module>tigon-unit-test</module>
     <module>tigon-archetypes</module>
+    <module>tigon-use-cases</module>
     <module>tigon-distribution</module>
   </modules>
 
