@@ -589,6 +589,17 @@ the stream. Once the inputs streams have been added, one or more SQL queries can
 defined using an ``addQuery`` method. The ``addQuery`` method takes the name of the query
 and the SQL statement.
 
+Currently, TigonSQL creates an interface set for every input that is added, using the same name
+as the input for the set. When an input is referenced in a TigonSQL query, the user needs to use the form
+``[<inputName>].inputName``.
+
+In the example below, ``intInput`` is both the input name and the interface set; in the query,
+we refer to this source as ``[intInput].intInput``.
+
+Interface sets are currently **not** exposed to TigonSQL users. This may change in a future release to
+enable more powerful queries. Though it is not necessary to know about them to use TigonSQL, you can refer to
+the :doc:`Tigon SQL User Manual </apis/index>` for more information about interface sets.
+
 The output of the SQL queries will be POJOs, whose output class you can define.
 The names of the members of the output class should match the names used in the SQL query
 statement. In the example given below, ``DataPacket`` is one such POJO class.
@@ -612,7 +623,7 @@ that method or emit the object to a subsequent Flowlet. In the example given bel
           .addField("intStream", GDATFieldType.INT)
           .build();
         addJSONInput("intInput", schema);
-        addQuery("sumOut", "SELECT timestamp, SUM(intStream) AS sumValue FROM intInput GROUP BY timestamp");
+        addQuery("sumOut", "SELECT timestamp, SUM(intStream) AS sumValue FROM [intInput].intInput GROUP BY timestamp");
       }
 
       @QueryOutput("sumOut")
